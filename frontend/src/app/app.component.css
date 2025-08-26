@@ -1,0 +1,36 @@
+.mainDiv{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    
+
+}
+
+.leftThird{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: green;
+
+}
+.middleThird{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.taskList{
+    width:100%
+}
+
+.rightThird{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: blue;
+    
+}

@@ -21,7 +21,7 @@ export class TasksService {
         id: 1,
         title: "Task 1",
         description: "Description for Task 1",
-        dueDate: new Date("2025-08-27"),
+        dueDate: new Date("2025-08-25"),
         priority: "high",
         isCompleted: false,
         progress: 40,

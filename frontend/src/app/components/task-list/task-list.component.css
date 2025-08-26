@@ -1,0 +1,97 @@
+.taskCard{
+    width:inherit;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.taskHeaders{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right:10px;
+    padding-left: 10px;
+}
+.taskHeaders:hover{
+    background-color:lightgray;
+    transition: 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.taskPriority{
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    background-color: blanchedalmond;
+    border-radius: 30px;
+    height: fit-content;
+    padding: 10px; 
+    font-weight: bold;
+    color: rgb(77, 76, 76);
+}
+
+.completed{
+    color: grey;
+    text-decoration: line-through;
+}
+
+.low{
+    background-color: lightgreen;
+}
+.medium{
+    background-color: yellow;
+}
+.high{
+    background-color: lightcoral;
+}
+
+.body{
+    display:none;
+    flex-direction: column;
+    padding-right:10px;
+    padding-left: 10px;
+}
+
+.taskBody{
+    width: 100%;
+}
+
+.taskDescription{
+    font-size: medium;
+}
+
+.taskDuedate{
+    font-size: small;
+    color: grey
+}
+
+.overdue{
+    color: red;
+    font-weight: bold;
+}
+progress{
+    width: 100%;
+    margin-bottom: 5px;;
+}
+
+.taskBtn{
+    border: none;
+    background-color: transparent;
+}
+.taskBtn:hover{
+    pointer-events: fill;
+}
+
+.subtask{
+    display: flex;
+    flex-direction: row;
+}
+.subtaskTitle{
+    font-size: small;
+}

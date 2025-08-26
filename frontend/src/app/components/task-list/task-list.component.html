@@ -1,1 +1,43 @@
-<p>task-list works!</p>
+<div class="taskCard" *ngFor="let task of tasks">
+    <div class="taskHeaders" (click)="openTask(task.id)" >
+        <h3 class="taskTitle" [ngClass]="{'completed': task.isCompleted}" >{{task.title}}</h3>
+        <div class="taskPriority"
+        [ngClass]="{
+            'low': task.priority === 'low',
+            'medium': task.priority === 'medium',
+            'high': task.priority === 'high'
+        }">
+            {{task.priority}}
+        </div>
+    </div>
+    <div class="body" id="{{task.id}}">
+        <div class="taskBody">
+            <p class="taskDescription" [ngClass]="{'completed': task.isCompleted}">{{task.description}}</p>
+            <p class="taskDuedate" [ngClass]="{'overdue': task.dueDate < today}">Due: {{task.dueDate | date:'mediumDate'}}</p>
+            <progress [value]="task.progress" max="100" class="taskProgress"></progress>
+        </div>
+        <div class="taskOptions">
+            <button class="taskBtn"><i class="fa-regular fa-circle"></i></button>
+            <button class="taskBtn"><i class="fa-regular fa-pen-to-square"></i></button>
+            <button class="taskBtn"><i class="fa-regular fa-trash-can"></i></button>
+        </div>
+        <div class="subtasksParentDiv">
+            <div  *ngFor="let subtask of task.subtasks" class="subtask">
+                <button class="taskBtn">
+                    <i *ngIf="!subtask.isCompleted" class="fa-regular fa-circle"></i>
+                    <i *ngIf="subtask.isCompleted" class="fa-solid fa-circle-check text-green-500"></i>
+                    
+                </button>
+                <p class="subtaskTitle" [ngClass]="{'completed': subtask.isCompleted}">{{subtask.title}}</p>
+            </div>
+        </div>
+
+    </div>
+    
+    
+    
+
+    
+
+
+</div>

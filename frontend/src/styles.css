@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+body, p, span, li {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+body{
+    background-color: aliceblue;
+}

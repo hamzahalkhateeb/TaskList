@@ -5,11 +5,14 @@ import { SubtasksService } from './services/subtasks.service';
 import {Task} from './models/task.model';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FilterComponent } from './components/filter/filter.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
+import { CalenderComponent } from './components/calender/calender.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [ CommonModule, FilterComponent, TaskListComponent, CalenderComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -23,8 +26,9 @@ export class AppComponent implements OnInit {
   
   constructor(private tasksService: TasksService) {}
 
-  //on page load, subscribe to all tasks
+  
   ngOnInit(): void {
+    //on page load, subscribe to all tasks and populate the tasks array
     this.tasksService.getAllTasks().subscribe({
       next: (tasks: Task[]) =>{
         this.tasks = tasks;
@@ -34,6 +38,8 @@ export class AppComponent implements OnInit {
         console.error('Error fetching tasks, ', err);
       }
     });
+
+
 
     
   }
