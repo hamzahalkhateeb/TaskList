@@ -1,9 +1,9 @@
 
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { Subtask } from '../../models/subtask.model';
 import { Task } from '../../models/task.model';
+import { TasksService } from '../../services/tasks.service';
 
 @Component({
   selector: 'app-task-list',
@@ -14,6 +14,8 @@ import { Task } from '../../models/task.model';
 })
 export class TaskListComponent {
   @Input() tasks: Task[] = [];
+
+  constructor(private tasksService: TasksService) {}
 
   today = new Date();
 
@@ -28,6 +30,45 @@ export class TaskListComponent {
 
     const isHidden = getComputedStyle(div).display === "none";
     div.style.display = isHidden ? "flex" : "none";
+  }
+
+  completeTask(id: number){
+
+    this.tasksService.completeTask(id).subscribe({
+      next: () =>{
+        const task = this.tasks.find(t=> t.id === id);
+        if(task){
+          task.isCompleted = true;
+        }
+      },
+      error: (err: Error) =>{
+        console.error('Error completing task, ', err);
+      }
+    });
+    
+
+  }
+
+  deleteTask(id: number){
+     this.tasksService.deleteTask(id).subscribe({
+      next: () =>{
+        const task = this.tasks.find(t=> t.id === id);
+        if(task){
+          const index = this.tasks.findIndex(task => task.id === id);
+          if(index !== -1){
+            this.tasks.splice(index, 1);
+          }
+        }
+      },
+      error: (err: Error) =>{
+        console.error('Error fetching tasks, ', err);
+      }
+    });
+
+  }
+
+  completeSubtask(subId: number, taskId: number){
+
   }
 
 

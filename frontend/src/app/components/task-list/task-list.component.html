@@ -17,9 +17,12 @@
             <progress [value]="task.progress" max="100" class="taskProgress"></progress>
         </div>
         <div class="taskOptions">
-            <button class="taskBtn"><i class="fa-regular fa-circle"></i></button>
+            <button class="taskBtn" (click)="completeTask(task.id)">
+                <i *ngIf="!task.isCompleted" class="fa-regular fa-circle"></i>
+                <i *ngIf="task.isCompleted" class="fa-solid fa-circle-check text-green-500"></i>
+            </button>
             <button class="taskBtn"><i class="fa-regular fa-pen-to-square"></i></button>
-            <button class="taskBtn"><i class="fa-regular fa-trash-can"></i></button>
+            <button class="taskBtn" (click)="deleteTask(task.id)"><i class="fa-regular fa-trash-can"></i></button>
         </div>
         <div class="subtasksParentDiv">
             <div  *ngFor="let subtask of task.subtasks" class="subtask">
