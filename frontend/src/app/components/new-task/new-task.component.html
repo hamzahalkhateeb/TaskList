@@ -1,1 +1,54 @@
-<p>new-task works!</p>
+<h1>Add a new task</h1>
+<div>
+  <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+    <div class="newTaskDiv">
+      <div class="part">
+        <label class="label">Task Title</label>
+        <input class="input" type="text" formControlName="title"  />
+      </div>
+      <div class="part">
+        <label class="label">Task Description</label>
+        <input
+          class="input"
+          type="text"
+          formControlName="description"
+          
+        />
+      </div>
+      <div class="part">
+        <label class="label">Priority</label>
+        <select class="input" formControlName="priority" >
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div class="part">
+        <label class="label">Due Date</label>
+        <input class="input" type="date" formControlName="dueDate"  />
+      </div>
+
+      <div class="part subtasks" formArrayName="subtasks">
+        <label class="label">Subtasks</label>
+        <div *ngFor="let subtask of subtasks.controls; let i = index" [formGroupName]="i">
+          <input
+            class="input"
+            type="text"
+            formControlName="title"
+            placeholder="subtask title"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn"
+          (click)="addSubtasksDiv()"
+          [disabled]="subtasks.length >= maxSubtask"
+        >
+          <i class="fas fa-plus fa-2x"></i>
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn submitBtn">Create Task</button>
+  </form>
+</div>

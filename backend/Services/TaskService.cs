@@ -186,16 +186,28 @@ namespace Backend.Services
         //add a task to tasksByDate
         public void AddTask(Backend.Models.Task task)
         {
-            //extract the date from task
-            var date = task.DueDate.Date;
+             // Assign unique ID by finding the current max ID in the dictionary
+            int newId = 1;
+            if (_tasksByDate.Values.Any() && _tasksByDate.Values.SelectMany(tl => tl).Any())
+            {
+                newId = _tasksByDate.Values
+                    .SelectMany(tl => tl)
+                    .Max(t => t.Id) + 1;
+            }
+            task.Id = newId;
 
-            //check if the date exists in the dictionary
-            //if not, create a key!
-            if (!_tasksByDate.ContainsKey(date.ToString()))
-                _tasksByDate[date.ToString()] = new List<Backend.Models.Task>();
+            // Initialize progress
+            task.Progress = 0;
 
-            //if key already exists, add task to it
-            _tasksByDate[date.ToString()].Add(task);
+            // Use DateTime directly as key
+            var dateKey = task.DueDate.ToString("yyyy-MM-dd");
+
+            // Ensure key exists
+            if (!_tasksByDate.ContainsKey(dateKey))
+                _tasksByDate[dateKey] = new List<Backend.Models.Task>();
+
+            // Add task
+            _tasksByDate[dateKey].Add(task);
         }
 
         public Dictionary<string, List<Backend.Models.Task>> GetAllTasks(string from, string to)

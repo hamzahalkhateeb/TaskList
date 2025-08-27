@@ -1,0 +1,49 @@
+.newTaskDiv{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    border-bottom: 1px solid lightgray;
+}
+
+.part{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;;
+}
+
+.label{
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.input{
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    height: 20px;
+    margin-bottom: 10px;;
+}
+
+.btn{
+    
+    width: fit-content;
+    background-color: lightskyblue;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.submitBtn{
+    margin-top: 20px;
+    width: 100%;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.btn:hover{
+    cursor: pointer;
+}
+
+.input.ng-invalid.ng-touched {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}
