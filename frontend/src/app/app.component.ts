@@ -18,8 +18,7 @@ import { TasksByDate } from './models/taskByDate.model';
 })
 export class AppComponent implements OnInit {
   //empty tasks array will be populated as soon as page initiates
-  //dictionary of tasks grouped by date keys
-  tasksByDate: TasksByDate = {};
+  //decalre empty list as we will need it when we convert dictionary to a list
   tasks: any[] = [];
 
   
@@ -32,16 +31,13 @@ export class AppComponent implements OnInit {
     //on page load, subscribe to all tasks and populate the tasks array
     this.tasksService.getAllTasks().subscribe({
       next: (res: any) =>{
-        this.tasksByDate = res;
-        console.log(this.tasksByDate);
-
         //given that the dictionary is not an interable object, we convert it to a list
-        this.tasks = Object.entries(this.tasksByDate).map(([date, taskList]) => ({
+        this.tasks = Object.entries(res.tasks).map(([date, taskList]) => ({
           date,
           tasks: taskList
         }));
 
-        console.log('Converted list:', this.tasks);
+        console.table('Converted list:', this.tasks);
       },
       error: (err: Error) =>{
         console.error('Error fetching tasks, ', err);

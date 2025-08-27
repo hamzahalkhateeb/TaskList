@@ -32,7 +32,7 @@ namespace Backend.Controllers
 
 
 
-            return Ok(new { message = "retrieved tasks sucessfully", tasks = tasks });
+            return Ok(new {tasks = tasks });
         }
 
 
