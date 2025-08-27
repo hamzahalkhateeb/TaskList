@@ -8,7 +8,7 @@ import { Subtask } from '../models/subtask.model';
   providedIn: 'root',
 })
 export class SubtasksService {
-  private backendUrl = 'http://localhost:3000';
+  private backendUrl = 'http://localhost:5245';
 
   constructor(private http: HttpClient) {}
 
