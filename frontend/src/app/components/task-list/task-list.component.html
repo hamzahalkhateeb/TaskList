@@ -33,7 +33,7 @@
         </div>
         <div class="subtasksParentDiv" [id]="'subtaskDiv-' + task.id">
             <div  *ngFor="let subtask of task.subtasks" class="subtask">
-                <button class="taskBtn">
+                <button class="taskBtn" (click)="completeSubtask(task.id, subtask.id)">
                     <i *ngIf="!subtask.isCompleted" class="fa-regular fa-circle"></i>
                     <i *ngIf="subtask.isCompleted" class="fa-solid fa-circle-check text-green-500"></i>
                     

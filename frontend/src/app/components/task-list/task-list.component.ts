@@ -1,9 +1,9 @@
-
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subtask } from '../../models/subtask.model';
 import { Task } from '../../models/task.model';
 import { TasksService } from '../../services/tasks.service';
+import { SubtasksService } from '../../services/subtasks.service';
 
 @Component({
   selector: 'app-task-list',
@@ -15,7 +15,7 @@ import { TasksService } from '../../services/tasks.service';
 export class TaskListComponent {
   @Input() tasks: Task[] = [];
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService, private subtaskService: SubtasksService) {}
 
   today = new Date();
 
@@ -67,8 +67,21 @@ export class TaskListComponent {
 
   }
 
-  completeSubtask(subId: number, taskId: number){
-
+  completeSubtask(taskId: number, subId: number){
+    this.subtaskService.completeSubtask(taskId, subId).subscribe({
+      next: () =>{
+        const task = this.tasks.find(t=> t.id === taskId);
+        if(task){
+          const subtask = task.subtasks.find(s=> s.id === subId);
+          if(subtask){
+            subtask.isCompleted = true;
+          }
+        }
+      },
+      error: (err: Error) =>{
+        console.error('Error completing subtask, ', err);
+      }
+    });
   }
 
   showSubtasks(id:number){
