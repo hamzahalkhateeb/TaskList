@@ -53,10 +53,28 @@ export class AppComponent implements OnInit {
   //declare functions
   onFilterChanged(filters: any){
     console.log("filters received", filters);
+    
+    
+  }
 
-    //make a new call for tasks that fit the filters
-    //on backend, structure them differnetly
-    //that's it!
+  onTaskAddition(){
+
+    console.log("tasks reloading request");
+    //reload tasks list
+    this.tasksService.getAllTasks().subscribe({
+      next: (res: any) =>{
+        //given that the dictionary is not an interable object, we convert it to a list
+        this.tasks = Object.entries(res.tasks).map(([date, taskList]) => ({
+          date,
+          tasks: taskList
+        }));
+
+        
+      },
+      error: (err: Error) =>{
+        console.error('Error fetching tasks, ', err);
+      }
+    });
   }
 
 

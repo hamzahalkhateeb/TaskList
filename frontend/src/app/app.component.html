@@ -1,7 +1,7 @@
 
 <div class="mainDiv">
   <div class="leftThird">
-    <app-filter class="filter" (filterChanged)="onFilterChanged($event)"></app-filter>
+    <app-filter class="filter" (filterChanged)="onFilterChanged($event)" ></app-filter>
   </div>
 
   <div class="middleThird">
@@ -9,7 +9,7 @@
   </div>
 
   <div class="rightThird">
-    <app-new-task></app-new-task>
+    <app-new-task (reloadTasks)="onTaskAddition()"></app-new-task>
     
   </div>
 </div>
