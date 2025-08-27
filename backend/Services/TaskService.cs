@@ -1,4 +1,7 @@
+using System.Globalization;
+using System.Linq.Expressions;
 using Backend.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Services
 {
@@ -184,10 +187,28 @@ namespace Backend.Services
             _tasksByDate[date.ToString()].Add(task);
         }
 
-        public void GetAllTasks(string from, string to)
+        public Dictionary<string, List<Backend.Models.Task>> GetAllTasks(string from, string to)
         {
             Console.WriteLine($"from date:{from} to date: {to}");
+            //convert date from string to datetime object
+            DateTime fromDate = DateTime.ParseExact(from, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime toDate = DateTime.ParseExact(to, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
+            //resulting dictionary
+            var result = _tasksByDate
+                .Where(element =>
+                {
+                    //convert each key as we go, so we can compare our date range to the current element
+                    DateTime keyDate = DateTime.ParseExact(element.Key, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                    //return the key if it falls between the required range inclusive
+                    return keyDate >= fromDate && keyDate <= toDate;
+                })
+
+                //convert the returned value into a 
+                .ToDictionary(element => element.Key, element => element.Value);
+                
+            return result;
         }
 
 

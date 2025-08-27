@@ -20,9 +20,19 @@ namespace Backend.Controllers
         [HttpGet]
         public IActionResult GetAllTasks([FromQuery] string from, [FromQuery] string to)
         {
-            Console.WriteLine("received get all tasks on backend!");
-            _taskService.GetAllTasks(from, to);
-            return Ok(new { message = "retrieved tasks sucessfully", /* tasks here*/ });
+            //get tasks and convert them to a json string
+            var tasks = _taskService.GetAllTasks(from, to);
+
+
+
+            if (tasks == null)
+            {
+                return Ok(new { message = "no tasks found in the given range" });
+            }
+
+
+
+            return Ok(new { message = "retrieved tasks sucessfully", tasks = tasks });
         }
 
 
