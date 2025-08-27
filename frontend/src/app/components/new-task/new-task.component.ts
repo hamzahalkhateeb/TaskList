@@ -69,7 +69,7 @@ export class NewTaskComponent {
   
     const formValue = this.taskForm.value;
     console.log(formValue);
-/*
+
     this.tasksService.createTask(formValue).subscribe({
       next: () =>{
 
@@ -78,7 +78,7 @@ export class NewTaskComponent {
       error: (err: Error) =>{
         console.error('Error completing task, ', err);
       }
-    }); */
+    }); 
     
       
   } 

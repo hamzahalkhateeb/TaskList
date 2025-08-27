@@ -59,12 +59,35 @@ namespace Backend.Controllers
         
 
         [HttpPost]
-        public IActionResult CreateTask([FromBody] object task)//might need to add some data validation here!
+        public IActionResult CreateTask([FromBody] Backend.Models.Task task)//might need to add some data validation here!
         {
-            Console.WriteLine("received create a task on backend!");
-            //verify the data
-            //call on the AddTask function from services
-            return Ok(new { message = "task created successfully here", /* return task! or new updated task list!*/ });
+            if (task == null)
+            {
+                return BadRequest(new { message="task is missing" });
+            }
+
+            if (string.IsNullOrWhiteSpace(task.Title))
+            {
+                return BadRequest(new { message="Title is required" });
+            }
+            if (task.DueDate == default)
+            {
+                return BadRequest(new { message = "Task due date is required." });
+            }
+            if (string.IsNullOrWhiteSpace(task.Priority))
+            {
+                return BadRequest(new { message = "priority is required" });
+            }
+            var allowedPriorities = new[] { "low", "medium", "high" };
+            if (!allowedPriorities.Contains(task.Priority.ToLower()))
+            {
+                return BadRequest(new { message = "Priority must be one of: low, medium, high." });
+            }
+
+            _taskService.AddTask(task);
+
+            //return
+            return Ok(new { message = "task created successfully here"});
         }
 
         [HttpPatch("{taskId}")]
