@@ -7,12 +7,11 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FilterComponent } from './components/filter/filter.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
-import { CalenderComponent } from './components/calender/calender.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ CommonModule, FilterComponent, TaskListComponent, CalenderComponent ],
+  imports: [ CommonModule, FilterComponent, TaskListComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -45,6 +44,9 @@ export class AppComponent implements OnInit {
   }
 
   //declare functions
+  onFilterChanged(filters: any){
+    console.log("filters received", filters);
+  }
 
 
 }

@@ -1,1 +1,35 @@
-<p>filter works!</p>
+<div class="filter-panel">
+    <h2 class="heading">Filters</h2>
+  <!-- Priority Sorting -->
+  <h4 class="heading">Priority</h4>
+  <select class="select" [(ngModel)]="priorityOptions" >
+    <option value="lowToHigh">Low → High</option>
+    <option value="highToLow">High → Low</option>
+  </select>
+
+  <!-- Status Sorting -->
+  <h4 class="heading">Status</h4>
+  <select class="select" [(ngModel)]="statusOptions" >
+    
+    <option class="option" value="completedFirst">Completed First</option>
+    <option class="option" value="notCompletedFirst">Not Completed First</option>
+  </select>
+
+  <!-- Date Range -->
+  <h4 class="heading">Date Range</h4>
+  <select class="select" [(ngModel)]="dateRange" >
+    <option class="option" value="today">Today</option>
+    <option class="option" value="tomorrow">Tomorrow</option>
+    <option class="option" value="customeRange">Custom Range</option>
+  </select>
+
+  <div *ngIf="dateRange === 'customeRange'">
+    From
+    <input class="select" type="date" [(ngModel)]="customeStartDate" >
+    To
+    <input class="select" type="date" [(ngModel)]="customeEndDate" >
+  </div>
+
+  <button class="btn" (click)="updateFilters()">Apply Filters</button>
+</div>
+
