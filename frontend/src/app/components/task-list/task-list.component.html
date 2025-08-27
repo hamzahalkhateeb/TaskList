@@ -1,5 +1,5 @@
-<div class="taskCard" *ngFor="let group of tasks">
-    <h2>{{group.date}}</h2>
+<div class="taskParent" *ngFor="let group of tasks">
+    <h3 class="taskTitle">Tasks For: {{group.date}}</h3>
     
     <div class="taskCard" *ngFor="let task of group.tasks">
     <div class="taskHeaders" (click)="openTask(task.id)" >

@@ -19,6 +19,7 @@ namespace Backend.Services
                         Description = "Review teammate's pull requests",
                         DueDate = DateTime.Parse("2025-08-25"),
                         Priority = "high",
+                        Progress = 50,
                         isCompleted = false,
                         Subtasks = new List<Subtask>
                         {
@@ -34,6 +35,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-25"),
                         Priority = "medium",
                         isCompleted = true,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 3, Title = "Watch tutorial", IsCompleted = true },
@@ -51,6 +53,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-26"),
                         Priority = "high",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 5, Title = "Identify bug source", IsCompleted = true },
@@ -65,6 +68,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-26"),
                         Priority = "medium",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 7, Title = "Explain code structure", IsCompleted = true },
@@ -83,6 +87,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-27"),
                         Priority = "high",
                         isCompleted = false,
+                        Progress = 0,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 9, Title = "Resolve conflicts", IsCompleted = false },
@@ -97,6 +102,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-27"),
                         Priority = "low",
                         isCompleted = true,
+                        Progress = 100,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 11, Title = "Prepare notes", IsCompleted = true },
@@ -115,6 +121,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-28"),
                         Priority = "medium",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 13, Title = "Check existing docs", IsCompleted = true },
@@ -129,6 +136,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-28"),
                         Priority = "high",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 15, Title = "Build Docker image", IsCompleted = true },
@@ -147,6 +155,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-29"),
                         Priority = "medium",
                         isCompleted = false,
+                        Progress = 0,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 17, Title = "Separate concerns", IsCompleted = false },
@@ -161,6 +170,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-29"),
                         Priority = "low",
                         isCompleted = true,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 19, Title = "Prepare slides", IsCompleted = true },

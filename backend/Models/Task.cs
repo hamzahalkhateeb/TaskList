@@ -9,6 +9,7 @@ namespace Backend.Models
     public string Description { get; set; } = string.Empty;
     public DateTime DueDate { get; set; }
     public string Priority { get; set; } = "low";
+    public int Progress { get; set; }
     public bool isCompleted { get; set; } = false;
     public List<Subtask> Subtasks { get; set; } = new List<Subtask>();
 }
