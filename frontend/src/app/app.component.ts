@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { FilterComponent } from './components/filter/filter.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TasksByDate } from './models/taskByDate.model';
+import { NewTaskComponent } from "./components/new-task/new-task.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ CommonModule, FilterComponent, TaskListComponent ],
+  imports: [CommonModule, FilterComponent, TaskListComponent, NewTaskComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
