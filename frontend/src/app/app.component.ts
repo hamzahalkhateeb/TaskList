@@ -46,6 +46,10 @@ export class AppComponent implements OnInit {
   //declare functions
   onFilterChanged(filters: any){
     console.log("filters received", filters);
+
+    //make a new call for tasks that fit the filters
+    //on backend, structure them differnetly
+    //that's it!
   }
 
 

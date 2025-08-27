@@ -16,7 +16,7 @@ export class TasksService {
   //get all tasks, take a time frame as optional parameter
   getAllTasks(fromDate?: string, toDate?: string):Observable<Task[]> {
 
-    const mockTasks: Task[]= [
+    /*const mockTasks: Task[]= [
       {
         id: 1,
         title: "Task 1",
@@ -163,21 +163,21 @@ export class TasksService {
       },
     ];
 
-    return of(mockTasks);
+    return of(mockTasks); */
 
-    /*
+    
     //get current date
     const now = new Date();
     
 
-    //if no time frame is provided, set default to one week before and one week after current date AND convert to ISO string
+    //if no time frame is provided, get tasks for today and tomorrow only
     const from =
       fromDate ||
-      new Date(new Date(now).setDate(now.getDate() - 7)).toISOString();
+      new Date(new Date(now).setDate(now.getDate())).toISOString();
 
     const to =
       toDate ||
-      new Date(new Date(now).setDate(now.getDate() + 7)).toISOString();
+      new Date(new Date(now).setDate(now.getDate() + 1)).toISOString();
 
     // Fetch tasks within the given or default time frame
     return this.http
@@ -187,7 +187,7 @@ export class TasksService {
           console.error('Error fetching tasks', error);
           return of([]);
         })
-      ); */
+      ); 
   }
 
   //delete a task by task id
