@@ -1,8 +1,10 @@
+import { Subtask } from './../../models/subtask.model';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TasksService } from '../../services/tasks.service';
 
 
 @Component({
@@ -16,9 +18,15 @@ export class NewTaskComponent {
 
   //declare empty object to hold inout data
   taskForm: FormGroup;
+  // the maximum number of subtasks a task can have!
   maxSubtask = 5;
 
-  constructor(private fb: FormBuilder){
+  //subtask id counter
+  private subtaskIdCounter = 1;
+
+
+
+  constructor(private fb: FormBuilder, private tasksService: TasksService){
     this.taskForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', Validators.maxLength(100)],
@@ -28,13 +36,24 @@ export class NewTaskComponent {
     });
   }
 
+  //gets subtasks from input in the form of an array
   get subtasks(): FormArray{
     return this.taskForm.get('subtasks') as FormArray;
   }
 
+  //increment subtask id to make sure each task has a unique id and is not completed by default!
+  createSubtaskControl(title: string = ''): FormGroup {
+    return this.fb.group({
+      id: [this.subtaskIdCounter++],     
+      title: [title, Validators.required],
+      isCompleted: [false]               
+    });
+  }
+
+  //adds subtasks to the task
   addSubtasksDiv(){
     if(this.subtasks.length < this.maxSubtask){
-      this.subtasks.push(this.fb.control('', Validators.required));
+      this.subtasks.push(this.createSubtaskControl());
     }
   }
 
@@ -49,7 +68,18 @@ export class NewTaskComponent {
     
   
     const formValue = this.taskForm.value;
-    console.log('Task payload:', formValue);
+    console.log(formValue);
+/*
+    this.tasksService.createTask(formValue).subscribe({
+      next: () =>{
+
+        
+      },
+      error: (err: Error) =>{
+        console.error('Error completing task, ', err);
+      }
+    }); */
+    
       
   } 
 

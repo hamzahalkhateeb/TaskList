@@ -30,11 +30,11 @@
 
       <div class="part subtasks" formArrayName="subtasks">
         <label class="label">Subtasks</label>
-        <div *ngFor="let subtask of subtasks.controls; let i = index">
+        <div *ngFor="let subtask of subtasks.controls; let i = index" [formGroupName]="i">
           <input
             class="input"
             type="text"
-            [formControlName]="i"
+            formControlName="title"
             placeholder="subtask title"
           />
         </div>
