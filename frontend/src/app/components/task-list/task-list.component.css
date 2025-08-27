@@ -85,7 +85,28 @@ progress{
     background-color: transparent;
 }
 .taskBtn:hover{
-    pointer-events: fill;
+    cursor: pointer;
+    color: green;
+    transition: 200ms ease-in-out;
+}
+
+.taskOptions{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    align-items: center;
+}
+.subtaskDisplayToggle{
+    display: flex;
+    flex-direction: row;
+    color: grey;
+}
+
+.subtaskDisplayToggle:hover{
+    cursor: pointer;
+    color: black;
+    transition: 200ms ease-in-out;
 }
 
 .subtask{
@@ -94,4 +115,9 @@ progress{
 }
 .subtaskTitle{
     font-size: small;
+}
+
+.subtasksParentDiv{
+    display: none;
+    flex-direction: column;
 }

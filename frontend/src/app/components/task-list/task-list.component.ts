@@ -71,5 +71,16 @@ export class TaskListComponent {
 
   }
 
+  showSubtasks(id:number){
+    const divId = `subtaskDiv-` + id.toString();
+    
+    const div = document.getElementById(divId);
+    
+    if (!div) return;
+
+    const isHidden = getComputedStyle(div).display === "none";
+    div.style.display = isHidden ? "flex" : "none";
+  }
+
 
 }
