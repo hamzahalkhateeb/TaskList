@@ -9,7 +9,8 @@ namespace Backend.Services
     {
         //declare data structure to house tasks
         //in this case, I will use a Dictionary
-        private readonly Dictionary<string, List<Backend.Models.Task>> _tasksByDate = new Dictionary<string, List<Backend.Models.Task>>{
+        private readonly Dictionary<string, List<Backend.Models.Task>> _tasksByDate = new Dictionary<string, List<Backend.Models.Task>>
+        {
             ["2025-08-25"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
@@ -77,7 +78,7 @@ namespace Backend.Services
                     }
                 },
 
-                ["2025-08-27"] = new List<Backend.Models.Task>
+            ["2025-08-27"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
                     {
@@ -111,7 +112,7 @@ namespace Backend.Services
                     }
                 },
 
-                ["2025-08-28"] = new List<Backend.Models.Task>
+            ["2025-08-28"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
                     {
@@ -145,7 +146,7 @@ namespace Backend.Services
                     }
                 },
 
-                ["2025-08-29"] = new List<Backend.Models.Task>
+            ["2025-08-29"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
                     {
@@ -178,9 +179,9 @@ namespace Backend.Services
                         }
                     }
                 }
-            };
-        
-        
+        };
+
+
 
         //add a task to tasksByDate
         public void AddTask(Backend.Models.Task task)
@@ -217,12 +218,12 @@ namespace Backend.Services
 
                 //convert the returned value into a 
                 .ToDictionary(element => element.Key, element => element.Value);
-                
+
             return result;
         }
 
 
-        public bool completeTask(int taskId)
+        public bool CompleteTask(int taskId)
         {
             Console.WriteLine("looking for task now!");
             foreach (var tasklist in _tasksByDate.Values)
@@ -233,6 +234,25 @@ namespace Backend.Services
                     task.isCompleted = true;
                     Console.WriteLine($"Task with id: ${taskId} is successfully marked as completed");
                     return true;
+                }
+            }
+            Console.WriteLine("Failed marking task as completed!");
+            return false;
+        }
+        
+        public bool DeleteTask(int taskId)
+        {
+            Console.WriteLine("looking for task now!");
+            foreach (var tasklist in _tasksByDate.Values)
+            {
+                var task = tasklist.FirstOrDefault(task => task.Id == taskId);
+                if (task != null)
+                {
+                    //delete task
+                    tasklist.Remove(task);
+                    Console.WriteLine($"Task with ID {taskId} deleted successfully!");
+                    return true;
+
                 }
             }
             Console.WriteLine("Failed marking task as completed!");

@@ -40,10 +40,23 @@ namespace Backend.Controllers
         [HttpDelete("{taskId}")]
         public IActionResult DeleteTask(int taskId)
         {
-            Console.WriteLine("received delete task on backend!");
-            //add logic here
-            return Ok(new { message = "deleted task successfully here", /* nothing here*/ });
+            Console.WriteLine($"received task id: ${taskId}");
+            //validate data presence
+            if (taskId <= 0)
+            {
+                return BadRequest(new { message = "task id is missing or invalid" });
+            }
+
+            var deleted = _taskService.DeleteTask(taskId);
+
+            if (deleted == false)
+            {
+                return NotFound(new { message = $"Task with ID {taskId} not found." });
+            }
+            
+            return Ok(new { message = "task deleted successfully here"});
         }
+        
 
         [HttpPost]
         public IActionResult CreateTask([FromBody] object task)//might need to add some data validation here!
@@ -72,7 +85,7 @@ namespace Backend.Controllers
                 return BadRequest(new { message = "task id is missing or invalid" });
             }
 
-            var completed = _taskService.completeTask(taskId);
+            var completed = _taskService.CompleteTask(taskId);
 
             if (completed == false)
             {
