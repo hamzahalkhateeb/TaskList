@@ -222,7 +222,22 @@ namespace Backend.Services
         }
 
 
-        
+        public bool completeTask(int taskId)
+        {
+            Console.WriteLine("looking for task now!");
+            foreach (var tasklist in _tasksByDate.Values)
+            {
+                var task = tasklist.FirstOrDefault(task => task.Id == taskId);
+                if (task != null)
+                {
+                    task.isCompleted = true;
+                    Console.WriteLine($"Task with id: ${taskId} is successfully marked as completed");
+                    return true;
+                }
+            }
+            Console.WriteLine("Failed marking task as completed!");
+            return false;
+        }
         
     }
 }

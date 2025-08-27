@@ -20,17 +20,18 @@ namespace Backend.Controllers
         [HttpGet]
         public IActionResult GetAllTasks([FromQuery] string from, [FromQuery] string to)
         {
-            //get tasks and convert them to a json string
+            //validate data presence
+            if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to))
+            {
+                return BadRequest(new { message= "one or more parameter is missing" });
+            };
+
             var tasks = _taskService.GetAllTasks(from, to);
-
-
 
             if (tasks == null)
             {
                 return Ok(new { message = "no tasks found in the given range" });
             }
-
-
 
             return Ok(new {tasks = tasks });
         }
@@ -62,11 +63,23 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{taskId}/complete")]
-        public IActionResult CompleteTask(int taskId)//might need to add some data validation here!
+        public IActionResult CompleteTask([FromQuery] int taskId)
         {
-            Console.WriteLine("Task completed successfully");
-            //add logic here
-            return Ok(new { message = "task completed successfully here", /* return task! or new updated task list!*/ });
+            Console.WriteLine($"received task id: ${taskId}");
+            //validate data presence
+            if (taskId <= 0)
+            {
+                return BadRequest(new { message = "task id is missing or invalid" });
+            }
+
+            var completed = _taskService.completeTask(taskId);
+
+            if (completed == false)
+            {
+                return NotFound(new { message = $"Task with ID {taskId} not found." });
+            }
+            
+            return Ok(new { message = "task completed successfully here"});
         }
         //////////////////Below is subtask end points///////////////////////////////////////
         [HttpPost("{taskId}/subtasks")]
