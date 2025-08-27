@@ -239,7 +239,7 @@ namespace Backend.Services
             Console.WriteLine("Failed marking task as completed!");
             return false;
         }
-        
+
         public bool DeleteTask(int taskId)
         {
             Console.WriteLine("looking for task now!");
@@ -258,6 +258,39 @@ namespace Backend.Services
             Console.WriteLine("Failed marking task as completed!");
             return false;
         }
-        
+
+        public bool CompleteSubtask(int taskId, int subtaskId)
+        {
+            Console.WriteLine("looking for task now!");
+            foreach (var tasklist in _tasksByDate.Values)
+            {
+                //find the parent task
+                var task = tasklist.FirstOrDefault(task => task.Id == taskId);
+                if (task != null)
+                {
+                    //find the length of the subtassk array
+                    int subtaskCount = task.Subtasks.Count;
+                    //once subtask is completed, we will increase progress by progressPercentageIncrease
+                    int progressPercentageIncrease = 100 / subtaskCount;
+
+                    var subtask = task.Subtasks.FirstOrDefault(s => s.Id == subtaskId);
+                    if (subtask != null)
+                    {
+                        subtask.IsCompleted = true;
+                        //increase parent task progress
+                        task.Progress += progressPercentageIncrease;
+                        Console.WriteLine($"Subtask {subtaskId} marked as completed!");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Subtask {subtaskId} not found in task {taskId}.");
+                        return false;   
+                    }                   
+                }
+            }
+            Console.WriteLine("Failed marking task as completed!");
+            return false;
+        }
     }
 }

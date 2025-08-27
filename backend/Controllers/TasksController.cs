@@ -104,11 +104,23 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{taskId}/subtasks/{subtaskId}/complete")]
-        public IActionResult CompleteSubtask(int taskId, int subtaskId)//might need to add some data validation here!
+        public IActionResult CompleteSubtask([FromQuery]int taskId, [FromQuery] int subtaskId)//might need to add some data validation here!
         {
-            Console.WriteLine("subtask completed successfully");
-            //add logic here
-            return Ok(new { message = "subtask completed successfully here", /* return task! or new updated task list!*/ });
+            Console.WriteLine($"received task id: ${taskId} and subtask id: ${subtaskId}");
+            //validate data presence
+            if (taskId <= 0 || subtaskId <= 0)
+            {
+                return BadRequest(new { message = "task id or subtask id is missing or invalid " });
+            }
+
+            var completed = _taskService.CompleteSubtask(taskId, subtaskId);
+
+            if (completed == false)
+            {
+                return NotFound(new { message = $"subtask or task was not found." });
+            }
+            
+            return Ok(new { message = "subtask successfully completed"});
         }
 
         [HttpDelete("{taskId}/subtasks/{subtaskId}")]

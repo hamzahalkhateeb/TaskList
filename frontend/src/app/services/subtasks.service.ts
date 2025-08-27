@@ -13,6 +13,7 @@ export class SubtasksService {
   constructor(private http: HttpClient) {}
 
   //add subtask to a task by task id
+  //UI not implemented due to time constraints!
   addSubtask(taskId: number, subtask: Partial<Subtask>): Observable<Subtask> {
     return this.http
       .post<Subtask>(`${this.backendUrl}/tasks/${taskId}/subtasks`, subtask)
@@ -28,7 +29,8 @@ export class SubtasksService {
   completeSubtask(taskId: number, subtaskId: number): Observable<Subtask> {
     return this.http
       .patch<Subtask>(
-        `${this.backendUrl}/tasks/${taskId}/subtasks/${subtaskId}/complete`,
+        
+        `${this.backendUrl}/tasks/${taskId}/subtasks/${subtaskId}/complete?taskId=${taskId}&subtaskId=${subtaskId}`,
         {}
       )
       .pipe(
@@ -40,6 +42,7 @@ export class SubtasksService {
   }
 
   //delete subtask by subtask id and task id
+  //UI not implemented due to time constraints but its here!
   deleteSubtask(taskId: number, subtaskId: number): Observable<void> {
     return this.http
       .delete<void>(`${this.backendUrl}/tasks/${taskId}/subtasks/${subtaskId}`)

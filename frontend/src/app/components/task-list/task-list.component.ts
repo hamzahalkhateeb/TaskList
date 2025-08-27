@@ -82,9 +82,12 @@ export class TaskListComponent {
         for (let group of this.tasks) {
         const task = group.tasks.find(t => t.id === taskId);
         if (task) {
+          const subtaskCount = task.subtasks.length;
+          const progressIncrease = 100/subtaskCount;
           const subtask = task.subtasks.find(s => s.id === subId);
           if (subtask) {
             subtask.isCompleted = true;
+            task.progress += progressIncrease;
             break; // stop once we found the subtask
           }
         }
