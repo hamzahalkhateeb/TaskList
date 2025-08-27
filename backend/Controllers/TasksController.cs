@@ -20,29 +20,43 @@ namespace Backend.Controllers
         [HttpGet]
         public IActionResult GetAllTasks([FromQuery] string from, [FromQuery] string to)
         {
-            //get tasks and convert them to a json string
+            //validate data presence
+            if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to))
+            {
+                return BadRequest(new { message= "one or more parameter is missing" });
+            };
+
             var tasks = _taskService.GetAllTasks(from, to);
-
-
 
             if (tasks == null)
             {
                 return Ok(new { message = "no tasks found in the given range" });
             }
 
-
-
-            return Ok(new { message = "retrieved tasks sucessfully", tasks = tasks });
+            return Ok(new {tasks = tasks });
         }
 
 
         [HttpDelete("{taskId}")]
         public IActionResult DeleteTask(int taskId)
         {
-            Console.WriteLine("received delete task on backend!");
-            //add logic here
-            return Ok(new { message = "deleted task successfully here", /* nothing here*/ });
+            Console.WriteLine($"received task id: ${taskId}");
+            //validate data presence
+            if (taskId <= 0)
+            {
+                return BadRequest(new { message = "task id is missing or invalid" });
+            }
+
+            var deleted = _taskService.DeleteTask(taskId);
+
+            if (deleted == false)
+            {
+                return NotFound(new { message = $"Task with ID {taskId} not found." });
+            }
+            
+            return Ok(new { message = "task deleted successfully here"});
         }
+        
 
         [HttpPost]
         public IActionResult CreateTask([FromBody] object task)//might need to add some data validation here!
@@ -62,11 +76,23 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{taskId}/complete")]
-        public IActionResult CompleteTask(int taskId)//might need to add some data validation here!
+        public IActionResult CompleteTask([FromQuery] int taskId)
         {
-            Console.WriteLine("Task completed successfully");
-            //add logic here
-            return Ok(new { message = "task completed successfully here", /* return task! or new updated task list!*/ });
+            Console.WriteLine($"received task id: ${taskId}");
+            //validate data presence
+            if (taskId <= 0)
+            {
+                return BadRequest(new { message = "task id is missing or invalid" });
+            }
+
+            var completed = _taskService.CompleteTask(taskId);
+
+            if (completed == false)
+            {
+                return NotFound(new { message = $"Task with ID {taskId} not found." });
+            }
+            
+            return Ok(new { message = "task completed successfully here"});
         }
         //////////////////Below is subtask end points///////////////////////////////////////
         [HttpPost("{taskId}/subtasks")]
@@ -78,11 +104,23 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{taskId}/subtasks/{subtaskId}/complete")]
-        public IActionResult CompleteSubtask(int taskId, int subtaskId)//might need to add some data validation here!
+        public IActionResult CompleteSubtask([FromQuery]int taskId, [FromQuery] int subtaskId)//might need to add some data validation here!
         {
-            Console.WriteLine("subtask completed successfully");
-            //add logic here
-            return Ok(new { message = "subtask completed successfully here", /* return task! or new updated task list!*/ });
+            Console.WriteLine($"received task id: ${taskId} and subtask id: ${subtaskId}");
+            //validate data presence
+            if (taskId <= 0 || subtaskId <= 0)
+            {
+                return BadRequest(new { message = "task id or subtask id is missing or invalid " });
+            }
+
+            var completed = _taskService.CompleteSubtask(taskId, subtaskId);
+
+            if (completed == false)
+            {
+                return NotFound(new { message = $"subtask or task was not found." });
+            }
+            
+            return Ok(new { message = "subtask successfully completed"});
         }
 
         [HttpDelete("{taskId}/subtasks/{subtaskId}")]

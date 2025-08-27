@@ -1,4 +1,7 @@
-<div class="taskCard" *ngFor="let task of tasks">
+<div class="taskParent" *ngFor="let group of tasks">
+    <h3 class="taskTitle">Tasks For: {{group.date}}</h3>
+    
+    <div class="taskCard" *ngFor="let task of group.tasks">
     <div class="taskHeaders" (click)="openTask(task.id)" >
         <h3 class="taskTitle" [ngClass]="{'completed': task.isCompleted}" >{{task.title}}</h3>
         <div class="taskPriority"

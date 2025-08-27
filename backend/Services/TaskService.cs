@@ -9,7 +9,8 @@ namespace Backend.Services
     {
         //declare data structure to house tasks
         //in this case, I will use a Dictionary
-        private readonly Dictionary<string, List<Backend.Models.Task>> _tasksByDate = new Dictionary<string, List<Backend.Models.Task>>{
+        private readonly Dictionary<string, List<Backend.Models.Task>> _tasksByDate = new Dictionary<string, List<Backend.Models.Task>>
+        {
             ["2025-08-25"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
@@ -19,6 +20,7 @@ namespace Backend.Services
                         Description = "Review teammate's pull requests",
                         DueDate = DateTime.Parse("2025-08-25"),
                         Priority = "high",
+                        Progress = 50,
                         isCompleted = false,
                         Subtasks = new List<Subtask>
                         {
@@ -34,6 +36,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-25"),
                         Priority = "medium",
                         isCompleted = true,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 3, Title = "Watch tutorial", IsCompleted = true },
@@ -51,6 +54,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-26"),
                         Priority = "high",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 5, Title = "Identify bug source", IsCompleted = true },
@@ -65,6 +69,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-26"),
                         Priority = "medium",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 7, Title = "Explain code structure", IsCompleted = true },
@@ -73,7 +78,7 @@ namespace Backend.Services
                     }
                 },
 
-                ["2025-08-27"] = new List<Backend.Models.Task>
+            ["2025-08-27"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
                     {
@@ -83,6 +88,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-27"),
                         Priority = "high",
                         isCompleted = false,
+                        Progress = 0,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 9, Title = "Resolve conflicts", IsCompleted = false },
@@ -97,6 +103,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-27"),
                         Priority = "low",
                         isCompleted = true,
+                        Progress = 100,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 11, Title = "Prepare notes", IsCompleted = true },
@@ -105,7 +112,7 @@ namespace Backend.Services
                     }
                 },
 
-                ["2025-08-28"] = new List<Backend.Models.Task>
+            ["2025-08-28"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
                     {
@@ -115,6 +122,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-28"),
                         Priority = "medium",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 13, Title = "Check existing docs", IsCompleted = true },
@@ -129,6 +137,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-28"),
                         Priority = "high",
                         isCompleted = false,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 15, Title = "Build Docker image", IsCompleted = true },
@@ -137,7 +146,7 @@ namespace Backend.Services
                     }
                 },
 
-                ["2025-08-29"] = new List<Backend.Models.Task>
+            ["2025-08-29"] = new List<Backend.Models.Task>
                 {
                     new Backend.Models.Task
                     {
@@ -147,6 +156,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-29"),
                         Priority = "medium",
                         isCompleted = false,
+                        Progress = 0,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 17, Title = "Separate concerns", IsCompleted = false },
@@ -161,6 +171,7 @@ namespace Backend.Services
                         DueDate = DateTime.Parse("2025-08-29"),
                         Priority = "low",
                         isCompleted = true,
+                        Progress = 50,
                         Subtasks = new List<Subtask>
                         {
                             new Subtask { Id = 19, Title = "Prepare slides", IsCompleted = true },
@@ -168,9 +179,9 @@ namespace Backend.Services
                         }
                     }
                 }
-            };
-        
-        
+        };
+
+
 
         //add a task to tasksByDate
         public void AddTask(Backend.Models.Task task)
@@ -207,12 +218,79 @@ namespace Backend.Services
 
                 //convert the returned value into a 
                 .ToDictionary(element => element.Key, element => element.Value);
-                
+
             return result;
         }
 
 
-        
-        
+        public bool CompleteTask(int taskId)
+        {
+            Console.WriteLine("looking for task now!");
+            foreach (var tasklist in _tasksByDate.Values)
+            {
+                var task = tasklist.FirstOrDefault(task => task.Id == taskId);
+                if (task != null)
+                {
+                    task.isCompleted = true;
+                    Console.WriteLine($"Task with id: ${taskId} is successfully marked as completed");
+                    return true;
+                }
+            }
+            Console.WriteLine("Failed marking task as completed!");
+            return false;
+        }
+
+        public bool DeleteTask(int taskId)
+        {
+            Console.WriteLine("looking for task now!");
+            foreach (var tasklist in _tasksByDate.Values)
+            {
+                var task = tasklist.FirstOrDefault(task => task.Id == taskId);
+                if (task != null)
+                {
+                    //delete task
+                    tasklist.Remove(task);
+                    Console.WriteLine($"Task with ID {taskId} deleted successfully!");
+                    return true;
+
+                }
+            }
+            Console.WriteLine("Failed marking task as completed!");
+            return false;
+        }
+
+        public bool CompleteSubtask(int taskId, int subtaskId)
+        {
+            Console.WriteLine("looking for task now!");
+            foreach (var tasklist in _tasksByDate.Values)
+            {
+                //find the parent task
+                var task = tasklist.FirstOrDefault(task => task.Id == taskId);
+                if (task != null)
+                {
+                    //find the length of the subtassk array
+                    int subtaskCount = task.Subtasks.Count;
+                    //once subtask is completed, we will increase progress by progressPercentageIncrease
+                    int progressPercentageIncrease = 100 / subtaskCount;
+
+                    var subtask = task.Subtasks.FirstOrDefault(s => s.Id == subtaskId);
+                    if (subtask != null)
+                    {
+                        subtask.IsCompleted = true;
+                        //increase parent task progress
+                        task.Progress += progressPercentageIncrease;
+                        Console.WriteLine($"Subtask {subtaskId} marked as completed!");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Subtask {subtaskId} not found in task {taskId}.");
+                        return false;   
+                    }                   
+                }
+            }
+            Console.WriteLine("Failed marking task as completed!");
+            return false;
+        }
     }
 }

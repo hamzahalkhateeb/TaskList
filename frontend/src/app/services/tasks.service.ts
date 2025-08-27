@@ -76,7 +76,7 @@ export class TasksService {
 
   //complete a task by id
   completeTask(taskId: number): Observable<Task> {
-    return this.http.patch<Task>(`${this.apiUrl}/tasks/${taskId}/complete`, {}).pipe(
+    return this.http.patch<Task>(`${this.apiUrl}/tasks/${taskId}/complete?taskId=${taskId}`, {}).pipe(
       catchError((error) => {
         console.error('Error completing task', error);
         return of();

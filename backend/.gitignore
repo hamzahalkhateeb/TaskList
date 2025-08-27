@@ -1,0 +1,53 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio temporary files, build results, and
+# user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code settings
+.vscode/
+
+# Rider IDE
+.idea/
+
+# Resharper
+*.ReSharper*
+_ReSharper*/
+
+# NuGet packages
+*.nupkg
+# NuGet API keys
+.nuget/
+
+# MSTest test results
+TestResults/
+*.trx
+
+# Build results for VS Code or dotnet CLI
+project.lock.json
+project.fragment.lock.json
+
+# Visual Studio cache files
+*.cache
+*.vsix
+*.vsixmanifest
+
+# Dotnet publish output
+publish/
+
+# StyleCop cache
+StyleCopReport.xml
+
+# Entity Framework migrations snapshot
+*.Designer.cs
+
+# Rider caches
+.idea/
+
+# Dotnet tool directories
+.dotnet/
