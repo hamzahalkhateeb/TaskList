@@ -1,5 +1,5 @@
 using Backend.Models;
-namespace backend.Models
+namespace Backend.Models
 
 {
     public class Task

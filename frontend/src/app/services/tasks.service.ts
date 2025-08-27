@@ -26,11 +26,11 @@ export class TasksService {
     //if no time frame is provided, get tasks for today and tomorrow only
     const from =
       fromDate ||
-      new Date(new Date(now).setDate(now.getDate())).toISOString();
+      now.toISOString().split('T')[0];
 
     const to =
       toDate ||
-      new Date(new Date(now).setDate(now.getDate() + 1)).toISOString();
+      new Date(new Date(now).setDate(now.getDate() + 1)).toISOString().split('T')[0];
 
     // Fetch tasks within the given or default time frame
     return this.http

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Backend.Services;
+using Backend.Models;
 namespace Backend.Controllers
 {
     [ApiController]
@@ -6,12 +8,20 @@ namespace Backend.Controllers
     public class TasksController : ControllerBase
     {
 
+        private readonly TaskService _taskService;
+
+        public TasksController(TaskService taskService)
+        {
+            _taskService = taskService;
+        }
+
+
         // GET all tasks within a specific range
         [HttpGet]
         public IActionResult GetAllTasks([FromQuery] string from, [FromQuery] string to)
         {
             Console.WriteLine("received get all tasks on backend!");
-            //get all tasks logic
+            _taskService.GetAllTasks(from, to);
             return Ok(new { message = "retrieved tasks sucessfully", /* tasks here*/ });
         }
 
@@ -28,7 +38,8 @@ namespace Backend.Controllers
         public IActionResult CreateTask([FromBody] object task)//might need to add some data validation here!
         {
             Console.WriteLine("received create a task on backend!");
-            //add logic here
+            //verify the data
+            //call on the AddTask function from services
             return Ok(new { message = "task created successfully here", /* return task! or new updated task list!*/ });
         }
 

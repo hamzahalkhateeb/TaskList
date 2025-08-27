@@ -1,10 +1,14 @@
+using Backend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 //add controllers here
 builder.Services.AddControllers();
-
+builder.Services.AddSingleton<TaskService>(); 
 var app = builder.Build();
+
+app.UseHttpsRedirection();
 
 app.MapControllers();
 
