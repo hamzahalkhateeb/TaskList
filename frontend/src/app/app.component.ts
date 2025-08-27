@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FilterComponent } from './components/filter/filter.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
+import { TasksByDate } from './models/taskByDate.model';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,11 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 })
 export class AppComponent implements OnInit {
   //empty tasks array will be populated as soon as page initiates
-  tasks: Task[] = [];
+  //dictionary of tasks grouped by date keys
+  tasksByDate: TasksByDate = {};
+  tasks: any[] = [];
 
-  //filtered tasks will contain tasks that fit the filter criteria
-  filteredTasks: Task[] = [];
+  
   
   
   constructor(private tasksService: TasksService) {}
@@ -29,9 +31,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     //on page load, subscribe to all tasks and populate the tasks array
     this.tasksService.getAllTasks().subscribe({
-      next: (tasks: Task[]) =>{
-        this.tasks = tasks;
-        console.log(this.tasks);
+      next: (res: any) =>{
+        this.tasksByDate = res;
+        console.log(this.tasksByDate);
+
+        //given that the dictionary is not an interable object, we convert it to a list
+        this.tasks = Object.entries(this.tasksByDate).map(([date, taskList]) => ({
+          date,
+          tasks: taskList
+        }));
+
+        console.log('Converted list:', this.tasks);
       },
       error: (err: Error) =>{
         console.error('Error fetching tasks, ', err);
