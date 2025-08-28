@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
     //get tasks whithin given range!
     this.tasksService
-      .getAllTasks(filters.startDatre, filters.endDate)
+      .getAllTasks(filters.startDate, filters.endDate)
       .subscribe({
         next: (res: any) => {
           //given that the dictionary is not an interable object, we convert it to a list

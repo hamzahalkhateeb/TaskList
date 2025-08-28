@@ -114,5 +114,9 @@ export class TaskListComponent {
     div.style.display = isHidden ? "flex" : "none";
   }
 
+  alert(){
+    alert("Feature not implemented due to time constraints!");
+  }
+
 
 }
