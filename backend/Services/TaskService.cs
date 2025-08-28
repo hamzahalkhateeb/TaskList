@@ -9,6 +9,7 @@ namespace Backend.Services
     {
         //declare data structure to house tasks
         //in this case, I will use a Dictionary
+        //the following is mock up data!
         private readonly Dictionary<string, List<Backend.Models.Task>> _tasksByDate = new Dictionary<string, List<Backend.Models.Task>>
         {
             ["2025-08-25"] = new List<Backend.Models.Task>
@@ -186,7 +187,9 @@ namespace Backend.Services
         //add a task to tasksByDate
         public void AddTask(Backend.Models.Task task)
         {
-             // Assign unique ID by finding the current max ID in the dictionary
+            // Assign unique ID by finding the current max ID in the dictionary
+            //in a real world, we woudn't have to worry about unique id's as database would handle it!
+            //the following is not an optimal solution but we will stick to it for now
             int newId = 1;
             if (_tasksByDate.Values.Any() && _tasksByDate.Values.SelectMany(tl => tl).Any())
             {
@@ -210,6 +213,7 @@ namespace Backend.Services
             _tasksByDate[dateKey].Add(task);
         }
 
+        //get all tasks withinn a given time range!
         public Dictionary<string, List<Backend.Models.Task>> GetAllTasks(string from, string to)
         {
             Console.WriteLine($"from date:{from} to date: {to}");
@@ -234,9 +238,11 @@ namespace Backend.Services
             return result;
         }
 
-
+        //complete a task using id
         public bool CompleteTask(int taskId)
         {
+            //the following is not a very effecient way of finding the task, in a realworld setting, the database would handle finding the id for us!
+            //here, we are using in memory storage so we will have to settle for this or change the data structure completely, which is not ideal right now
             Console.WriteLine("looking for task now!");
             foreach (var tasklist in _tasksByDate.Values)
             {
@@ -271,6 +277,7 @@ namespace Backend.Services
             return false;
         }
 
+        //the following marks subtasks as complete and also changes the progress data of its parent task!
         public bool CompleteSubtask(int taskId, int subtaskId)
         {
             Console.WriteLine("looking for task now!");
@@ -297,8 +304,8 @@ namespace Backend.Services
                     else
                     {
                         Console.WriteLine($"Subtask {subtaskId} not found in task {taskId}.");
-                        return false;   
-                    }                   
+                        return false;
+                    }
                 }
             }
             Console.WriteLine("Failed marking task as completed!");
