@@ -59,7 +59,7 @@ export class NewTaskComponent {
     });
   }
 
-  //adds subtasks to the task
+  //adds subtasks list to the task object
   addSubtasksDiv() {
     if (this.subtasks.length < this.maxSubtask) {
       this.subtasks.push(this.createSubtaskControl());
@@ -67,6 +67,7 @@ export class NewTaskComponent {
   }
 
   //submit task
+  //and ask parent component to reload tasks list
   submitForm() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
@@ -78,9 +79,9 @@ export class NewTaskComponent {
 
     this.tasksService.createTask(formValue).subscribe({
       next: () => {
-        console.log("about to emit");
+        console.log('about to emit');
         this.reloadTasks.emit();
-        console.log("emitted");
+        console.log('emitted');
       },
       error: (err: Error) => {
         console.error('Error completing task, ', err);

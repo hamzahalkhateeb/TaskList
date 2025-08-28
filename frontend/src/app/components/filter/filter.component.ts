@@ -8,27 +8,26 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './filter.component.html',
-  styleUrl: './filter.component.css'
+  styleUrl: './filter.component.css',
 })
 export class FilterComponent {
-
   //the following are the filter options which will be used to sort the tasks list
   priorityOptions: 'lowToHigh' | 'highToLow' = 'highToLow';
   customeStartDate?: Date;
   customeEndDate?: Date;
 
   //when ffilters are changed, give an output to parent component!
+  //doing this will allow parent component to reload tasks and rearrange them using filters
   @Output() filterChanged = new EventEmitter<any>();
 
   //object to be given to parent component!
   updateFilters() {
-    const filters ={
+    const filters = {
       priorityOptions: this.priorityOptions,
       startDate: this.customeStartDate,
-      endDate: this.customeEndDate
+      endDate: this.customeEndDate,
     };
     this.filterChanged.emit(filters);
-    console.log("emitted data", filters);
+    console.log('emitted data', filters);
   }
-
 }

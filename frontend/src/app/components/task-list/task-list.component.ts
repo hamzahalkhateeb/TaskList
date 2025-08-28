@@ -22,7 +22,8 @@ export class TaskListComponent {
   today = new Date();
 
 
-
+  //tasks by default are collapsed
+  //the following function expands them to show more details
   openTask(id:number){
     console.log("open task clicked, ", id);
     const idString = id.toString();
@@ -34,12 +35,12 @@ export class TaskListComponent {
     div.style.display = isHidden ? "flex" : "none";
   }
 
+  // the following completes a task in the backend and finds the task in front end and sets it as complete
   
   completeTask(id: number){
 
     this.tasksService.completeTask(id).subscribe({
       next: () =>{
-
         //iterate over each day
         for (let group of this.tasks) {
           // find the task in this group's task array
@@ -58,6 +59,7 @@ export class TaskListComponent {
 
   }
 
+  //delete task, really simple and straight forward
   deleteTask(id: number){
      this.tasksService.deleteTask(id).subscribe({
       next: () =>{
@@ -76,6 +78,7 @@ export class TaskListComponent {
 
   }
 
+  //complete subtask of a task, really straight forward as well!
   completeSubtask(taskId: number, subId: number){
     this.subtaskService.completeSubtask(taskId, subId).subscribe({
       next: () =>{
@@ -98,7 +101,8 @@ export class TaskListComponent {
       }
     });
   }
-
+  //subtasks are also collapsed by default
+  //this allows to expand them!
   showSubtasks(id:number){
     const divId = `subtaskDiv-` + id.toString();
     

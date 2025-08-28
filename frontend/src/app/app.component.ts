@@ -42,11 +42,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  //declare functions
+  //when filters are applied, the tasks are retrieved from backend and reordered!
   onFilterChanged(filters: any) {
     console.log('filters received', filters);
 
-    //get tasks whithi given range!
+    //get tasks whithin given range!
     this.tasksService
       .getAllTasks(filters.startDatre, filters.endDate)
       .subscribe({
@@ -62,7 +62,8 @@ export class AppComponent implements OnInit {
           //sort based on filters
           this.tasks.forEach((day) => {
             day.tasks.sort((a: Task, b: Task) => {
-              // ----- Priority sorting -----
+              // priorty sorting
+              //assign each priority a number and sort using those numbers
               if (filters.priorityOptions) {
                 const priorityOrder =
                   filters.priorityOptions === 'highToLow'
@@ -72,7 +73,6 @@ export class AppComponent implements OnInit {
                   priorityOrder[b.priority] - priorityOrder[a.priority];
                 if (priorityDiff !== 0) return priorityDiff;
               }
-
 
               return 0;
             });
@@ -84,10 +84,10 @@ export class AppComponent implements OnInit {
           console.error('Error fetching tasks, ', err);
         },
       });
-
- 
   }
 
+  //when task is added, reload the tasks again to update them!
+  //this approach can be intensive - not very effecient
   onTaskAddition() {
     console.log('tasks reloading request');
     //reload tasks list

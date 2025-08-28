@@ -29,7 +29,6 @@ export class SubtasksService {
   completeSubtask(taskId: number, subtaskId: number): Observable<Subtask> {
     return this.http
       .patch<Subtask>(
-        
         `${this.backendUrl}/tasks/${taskId}/subtasks/${subtaskId}/complete?taskId=${taskId}&subtaskId=${subtaskId}`,
         {}
       )

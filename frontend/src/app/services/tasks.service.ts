@@ -8,7 +8,7 @@ import { Task } from '../models/task.model';
 })
 export class TasksService {
   //needed variables
-  private apiUrl = 'http://localhost:5245'; //Backend API URL
+  private apiUrl = 'http://localhost:5245'; //Backend API URL --  this would normally be in an env file!
 
   //constructor
   constructor(private http: HttpClient) {}
