@@ -14,23 +14,18 @@ export class TasksService {
   constructor(private http: HttpClient) {}
 
   //get all tasks, take a time frame as optional parameter
-  getAllTasks(fromDate?: string, toDate?: string):Observable<Task[]> {
-
-    
-
-    
+  getAllTasks(fromDate?: string, toDate?: string): Observable<Task[]> {
     //get current date
     const now = new Date();
-    
 
     //if no time frame is provided, get tasks for today and tomorrow only
-    const from =
-      fromDate ||
-      now.toISOString().split('T')[0];
+    const from = fromDate || now.toISOString().split('T')[0];
 
     const to =
       toDate ||
-      new Date(new Date(now).setDate(now.getDate() + 1)).toISOString().split('T')[0];
+      new Date(new Date(now).setDate(now.getDate() + 1))
+        .toISOString()
+        .split('T')[0];
 
     // Fetch tasks within the given or default time frame
     return this.http
@@ -40,7 +35,7 @@ export class TasksService {
           console.error('Error fetching tasks', error);
           return of([]);
         })
-      ); 
+      );
   }
 
   //delete a task by task id
@@ -52,7 +47,6 @@ export class TasksService {
       })
     );
   }
-
 
   //create a new task
   createTask(task: Partial<Task>): Observable<Task> {
@@ -66,26 +60,28 @@ export class TasksService {
 
   //update a task by task id
   updateTask(taskId: number, updatedTask: Partial<Task>): Observable<Task> {
-    return this.http.patch<Task>(`${this.apiUrl}/tasks/${taskId}`, updatedTask).pipe(
-      catchError((error) => {
-        console.error('Error updating task', error);
-        return of();
-      }));
+    return this.http
+      .patch<Task>(`${this.apiUrl}/tasks/${taskId}`, updatedTask)
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating task', error);
+          return of();
+        })
+      );
   }
-
 
   //complete a task by id
   completeTask(taskId: number): Observable<Task> {
-    return this.http.patch<Task>(`${this.apiUrl}/tasks/${taskId}/complete?taskId=${taskId}`, {}).pipe(
-      catchError((error) => {
-        console.error('Error completing task', error);
-        return of();
-      })
-    );
+    return this.http
+      .patch<Task>(
+        `${this.apiUrl}/tasks/${taskId}/complete?taskId=${taskId}`,
+        {}
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error completing task', error);
+          return of();
+        })
+      );
   }
-  
-  
-  
-
-
 }

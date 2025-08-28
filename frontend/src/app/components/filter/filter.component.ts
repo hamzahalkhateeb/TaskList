@@ -14,8 +14,6 @@ export class FilterComponent {
 
   //the following are the filter options which will be used to sort the tasks list
   priorityOptions: 'lowToHigh' | 'highToLow' = 'highToLow';
-  statusOptions: 'completedFirst' | 'notCompletedFirst' = 'notCompletedFirst';
-  dateRange: 'today' | 'tomorrow' | 'customeRange' = 'today';
   customeStartDate?: Date;
   customeEndDate?: Date;
 
@@ -26,8 +24,6 @@ export class FilterComponent {
   updateFilters() {
     const filters ={
       priorityOptions: this.priorityOptions,
-      statusOptions: this.statusOptions,
-      dateRange: this.dateRange,
       startDate: this.customeStartDate,
       endDate: this.customeEndDate
     };
